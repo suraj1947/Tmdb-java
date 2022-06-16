@@ -16,12 +16,12 @@ public class TmdbController {
 
   @Get
   public Optional<List<SearchResult>> searchByName(@QueryValue String query)
-      throws NoSuchFieldException {
+       {
     return peopleService.searchByName(query);
   }
 
   @Get("/{id}")
-  public Optional<Person> getById(int id) throws NoSuchFieldException {
+  public Optional<Person> getById(int id) {
     return peopleService.getById(id);
   }
 }

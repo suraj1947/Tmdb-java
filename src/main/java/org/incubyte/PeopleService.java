@@ -8,6 +8,8 @@ import java.time.Clock;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.incubyte.exceptions.DataNotFoundException;
+import org.incubyte.exceptions.InvalidDateException;
 
 @Singleton
 public class PeopleService {
@@ -21,13 +23,13 @@ public class PeopleService {
     this.tmdbClient = tmbdClient;
   }
 
-  public Optional<List<SearchResult>> searchByName(String name) throws NoSuchFieldException {
+  public Optional<List<SearchResult>> searchByName(String name)  {
     Optional<Page> result = tmdbClient.searchByName(name, apiKey);
     Page page;
     if (result.isPresent()) {
       page = result.get();
     } else {
-      throw new NoSuchFieldException("No result found");
+      throw new DataNotFoundException("No result found");
     }
     List<SearchResult> results = page.getResults();
     if (results.isEmpty()) {
@@ -36,13 +38,13 @@ public class PeopleService {
     return Optional.of(results);
   }
 
-  public Optional<Person> getById(int id) throws NoSuchFieldException {
+  public Optional<Person> getById(int id)  {
     Optional<Person> byId = this.tmdbClient.getById(id, apiKey);
     Person person;
     if (byId.isPresent()) {
       person = byId.get();
     } else {
-      throw new NoSuchFieldException("No result found");
+      throw new DataNotFoundException("No result found");
     }
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     try {
@@ -52,7 +54,7 @@ public class PeopleService {
       int thisYear = new Date(millis).getYear();
       person.setAge(thisYear - year);
     } catch (ParseException e) {
-     throw new RuntimeException("No Proper Date");
+     throw new InvalidDateException("No Proper Date");
     }
     return byId;
   }
