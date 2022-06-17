@@ -86,23 +86,26 @@ class PeopleServiceShould {
     verify(tmdbClient).getById(500, null);
   }
 
-//  @Test
-//  void return_tv_show_information() {
-//
-//    TVShowDto tvShowDto = new TVShowDto();
-//    tvShowDto.setId(1);
-//    tvShowDto.setFirstAirDate("1994-09-22");
-//    tvShowDto.setOverview("nice series");
-//    tvShowDto.setName("friends");
-//    when(tmdbClient.getTvShow("friends", null)).thenReturn(Optional.of(new TvShowWrapper()));
-//    Optional<List<TVShowDto>> result = peopleService.getTvShowsByName("friends");
-//    assertThat(result).isPresent();
-//    List<TVShowDto> actualTvShow = result.get();
-//    Assertions.assertEquals("1994-09-22", actualTvShow.getFirstAirDate());
-//    Assertions.assertEquals("friends", actualTvShow.getName());
-//    Assertions.assertEquals("nice series", actualTvShow.getOverview());
-//    Assertions.assertEquals(1, actualTvShow.getId());
-//
-//    verify(tmdbClient).getTvShow("friends", null);
-//  }
+  @Test
+  void return_tv_show_information() {
+
+    TVShowDto tvShowDto = new TVShowDto();
+    tvShowDto.setId(1);
+    tvShowDto.setFirstAirDate("1994-09-22");
+    tvShowDto.setOverview("nice series");
+    tvShowDto.setName("friends");
+    when(tmdbClient.getTvShow("friends", null)).thenReturn(Optional.of(new TvShowWrapper()));
+    Optional<List<TVShowDto>> result = peopleService.getTvShowsByName("friends");
+    assertThat(result).isPresent();
+    List<TVShowDto> actualTvShow = result.get();
+    TVShowDto tvShow ;
+
+
+    Assertions.assertEquals("1994-09-22",  actualTvShow.get(0).getFirstAirDate());
+    Assertions.assertEquals("friends",  actualTvShow.get(0).getName());
+    Assertions.assertEquals("nice series",  actualTvShow.get(0).getOverview());
+    Assertions.assertEquals(1,  actualTvShow.get(0).getId());
+
+    verify(tmdbClient).getTvShow("friends", null);
+  }
 }
