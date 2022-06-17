@@ -24,4 +24,10 @@ public class TmdbController {
   public Optional<Person> getById(int id) {
     return peopleService.getById(id);
   }
+
+  @Get("/tv")
+  public Optional<TVShowDto> getTvShowsByName(@QueryValue String query) {
+    return peopleService.getTvShowsByName(query);
+  }
+
 }

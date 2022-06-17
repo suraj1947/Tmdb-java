@@ -18,16 +18,23 @@ import org.junit.jupiter.api.Test;
   }
 
   @Test
-   void invoke_service_to_retrieve_search_results() throws NoSuchFieldException {
+   void invoke_service_to_retrieve_search_results()  {
     TmdbController peopleController = new TmdbController(peopleService);
     Optional<List<SearchResult>> results = peopleController.searchByName("tom cruise");
     verify(peopleService).searchByName("tom cruise");
   }
 
   @Test
-   void invoke_service_to_get_person_by_id() throws NoSuchFieldException {
+   void invoke_service_to_get_person_by_id() {
     TmdbController peopleController = new TmdbController(peopleService);
     Optional<Person> person = peopleController.getById(500);
     verify(peopleService).getById(500);
   }
+
+ @Test
+ void invoke_service_to_get_tv_shows_by_id() {
+  TmdbController peopleController = new TmdbController(peopleService);
+  Optional<TVShowDto> tvShow = peopleController.getTvShowsByName("friends");
+  verify(peopleService).getTvShowsByName("friends");
+ }
 }

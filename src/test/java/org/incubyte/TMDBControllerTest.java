@@ -1,6 +1,7 @@
 package org.incubyte;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.micronaut.core.type.Argument;
@@ -84,5 +85,20 @@ class TMDBControllerTest {
     assertThat(person.getGender()).isEqualTo(2);
     assertThat(person.getPlaceOfBirth()).isEqualTo("Syracuse, New York, USA");
 
+  }
+
+  @Test
+  void should_search_for_tv_shows_based_on_query() {
+    List<TVShowDto> results =
+        httpClient
+            .toBlocking()
+            .retrieve(
+                HttpRequest.GET("people/tv?query=friends"),
+                Argument.listOf(TVShowDto.class));//client could have been retrived
+    assertThat(results).isNotEmpty();
+    TVShowDto result = results.get(0);
+    assertThat(result.getName()).isNotEmpty();
+    assertThat(result.getId()).isEqualTo(1668);
+    assertEquals("2004-08-13",result.getFirstAirDate());
   }
 }

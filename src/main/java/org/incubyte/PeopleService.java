@@ -58,4 +58,20 @@ public class PeopleService {
     }
     return byId;
   }
+
+  public Optional<List<TVShowDto>> getTvShowsByName(String name){
+    Optional<TvShowWrapper> results = tmdbClient.getTvShow(name , apiKey);
+    TvShowWrapper tvShowWrapper;
+    if(results.isPresent()) {
+      tvShowWrapper = results.get();
+    }else
+    {
+      throw new DataNotFoundException("No data found for this name");
+    }
+    List<TVShowDto> tvShows = tvShowWrapper.getResults();
+    if(tvShows.isEmpty()){
+      return Optional.empty();
+    }
+    return Optional.of(tvShows);
+  }
 }

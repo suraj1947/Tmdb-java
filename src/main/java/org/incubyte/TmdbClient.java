@@ -13,4 +13,7 @@ public interface TmdbClient {
 
   @Get("person/{id}{?api_key}")
   Optional<Person> getById(int id, @QueryValue("api_key") String apikey);
+
+  @Get("/search/tv{?query}{&api_key}")
+  Optional<TvShowWrapper> getTvShow(@QueryValue String query, @QueryValue("api_key") String apiKey);
 }
